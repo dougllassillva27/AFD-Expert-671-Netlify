@@ -207,6 +207,7 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
       }
 
       function showInterpretedLines() {
+        dom.searchArea.style.display = 'none'; // Oculta a área de pesquisa
         if (!registrosData?.registros) return;
 
         const todasLinhas = Object.values(registrosData.registros)
