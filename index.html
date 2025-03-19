@@ -13,6 +13,12 @@
   <body>
     <div class="container">
       <h1>AFD Expert 671</h1>
+
+      <div id="loadingOverlay" style="display: none">
+        <div class="loading-spinner"></div>
+        <p>Carregando...</p>
+      </div>
+
       <form id="uploadForm" enctype="multipart/form-data">
         <label for="file" class="label-file">Escolher arquivo</label>
         <input type="file" id="file" name="file" required onchange="updateFileName()" />
@@ -80,9 +86,10 @@
         return datePart && timePart ? `${datePart.split('-').reverse().join('/')} ${timePart.substring(0, 8)}` : 'Inválido';
       }
 
-      // Upload completo
       document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        showLoading(); // Mostra o overlay de carregamento
+
         const file = dom.fileInput.files[0];
         const reader = new FileReader();
 
@@ -106,6 +113,8 @@
             displayResult(registrosData.registros);
           } catch (error) {
             console.error('Erro:', error);
+          } finally {
+            hideLoading(); // Oculta o overlay de carregamento
           }
         };
 
@@ -124,11 +133,12 @@
         dom.resultado.textContent = chunks.join('');
       }
 
-      // Funções de filtro completas
       function filterByType(tipo) {
+        showLoading(); // Mostra o overlay de carregamento
         dom.searchArea.style.display = 'none';
         const filteredData = tipo === 'all' ? registrosData.registros : { [tipo]: registrosData.registros[tipo] || [] };
         displayResult(filteredData);
+        hideLoading(); // Oculta o overlay de carregamento
       }
 
       function filterInvalidLines() {
@@ -208,6 +218,7 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
       }
 
       function showInterpretedLines() {
+        showLoading(); // Mostra o overlay de carregamento
         dom.searchArea.style.display = 'none'; // Oculta a área de pesquisa
         if (!registrosData?.registros) return;
 
@@ -221,6 +232,8 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
             return interpretarLinha(linha, tipo);
           })
           .join('\n');
+
+        hideLoading(); // Oculta o overlay de carregamento
       }
 
       function interpretarLinha(linha, tipo) {
@@ -279,6 +292,14 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
       dom.searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') performSearch();
       });
+
+      function showLoading() {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+      }
+
+      function hideLoading() {
+        document.getElementById('loadingOverlay').style.display = 'none';
+      }
     </script>
   </body>
 </html>
