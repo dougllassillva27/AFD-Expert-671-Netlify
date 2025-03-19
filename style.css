@@ -114,6 +114,51 @@ button:hover::after {
   visibility: visible;
 }
 
+/* Estilo para o botão "Listar" */
+.btn-listar {
+  background-color: #28a745; /* Azul */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-listar:hover {
+  background-color: #218838; /* Azul mais escuro no hover */
+}
+
+/* Estilo para o botão "Limpar" */
+.btn-limpar {
+  background-color: #ff0000; /* Cinza */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-limpar:hover {
+  background-color: #b92c2c; /* Cinza mais escuro no hover */
+}
+
+/* Estilo para os outros botões (opcional) */
+.buttons button {
+  background-color: #28a745; /* Verde */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttons button:hover {
+  background-color: #218838; /* Verde mais escuro no hover */
+}
+
 h2 {
   text-align: center;
   color: #333;
