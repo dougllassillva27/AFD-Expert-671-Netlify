@@ -32,16 +32,16 @@
       </form>
 
       <div class="buttons">
-        <button data-tooltip="Exibe detalhes do arquivo ou registro" onclick="showDetails()">Detalhes</button>
-        <button data-tooltip="Mostrar todos os registros" onclick="filterByType('all')">Todos</button>
+        <button data-tooltip="Exibe detalhes do arquivo ou registro" onclick="showDetails()" disabled class="btn-disabled">Detalhes</button>
+        <button data-tooltip="Mostrar todos os registros" onclick="filterByType('all')" disabled class="btn-disabled">Todos</button>
         <button data-tooltip="Registros do tipo 2 (Identificação da empresa no REP)" onclick="filterByType('2')" disabled class="btn-disabled">Tipo 2</button>
-        <button data-tooltip="Registros do tipo 3 (Marcação de ponto para REP-C e REP-A)" onclick="filterByType('3')">Tipo 3</button>
-        <button data-tooltip="Registros do tipo 4 (Ajuste do relógio)" onclick="filterByType('4')">Tipo 4</button>
-        <button data-tooltip="Registros do tipo 5 (Inclusão, alteração ou exclusão de empregado no REP)" onclick="filterByType('5')">Tipo 5</button>
-        <button data-tooltip="Registros do tipo 6 (Eventos sensíveis do REP)" onclick="filterByType('6')">Tipo 6</button>
-        <button data-tooltip="Linhas que não atendem a nenhum tipo" onclick="filterInvalidLines()">Linhas inválidas</button>
-        <button data-tooltip="Mostrar interpretação detalhada das linhas" onclick="showInterpretedLines()">Linhas interpretadas</button>
-        <button data-tooltip="Pesquisar dentro do arquivo carregado" onclick="toggleSearch()">Pesquisar</button>
+        <button data-tooltip="Registros do tipo 3 (Marcação de ponto para REP-C e REP-A)" onclick="filterByType('3')" disabled class="btn-disabled">Tipo 3</button>
+        <button data-tooltip="Registros do tipo 4 (Ajuste do relógio)" onclick="filterByType('4')" disabled class="btn-disabled">Tipo 4</button>
+        <button data-tooltip="Registros do tipo 5 (Inclusão, alteração ou exclusão de empregado no REP)" onclick="filterByType('5')" disabled class="btn-disabled">Tipo 5</button>
+        <button data-tooltip="Registros do tipo 6 (Eventos sensíveis do REP)" onclick="filterByType('6')" disabled class="btn-disabled">Tipo 6</button>
+        <button data-tooltip="Linhas que não atendem a nenhum tipo" onclick="filterInvalidLines()" disabled class="btn-disabled">Linhas inválidas</button>
+        <button data-tooltip="Mostrar interpretação detalhada das linhas" onclick="showInterpretedLines()" disabled class="btn-disabled">Linhas interpretadas</button>
+        <button data-tooltip="Pesquisar dentro do arquivo carregado" onclick="toggleSearch()" disabled class="btn-disabled">Pesquisar</button>
       </div>
 
       <h2>Resultado</h2>
@@ -300,6 +300,12 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
         // Oculta a área de pesquisa e limpa o campo de pesquisa
         dom.searchArea.style.display = 'none';
         dom.searchInput.value = '';
+
+        // Desabilitar os botões novamente
+        document.querySelectorAll('.buttons button').forEach((button) => {
+          button.disabled = true;
+          button.classList.add('btn-disabled');
+        });
       }
 
       // Event listeners
