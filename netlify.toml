@@ -1,0 +1,3 @@
+[build]
+  functions = "functions"  # Pasta onde estão as funções serverless
+  publish = "."            # Pasta onde está o site estático (index.html)
