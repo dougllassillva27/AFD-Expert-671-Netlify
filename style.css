@@ -249,3 +249,7 @@ pre {
   font-size: 18px;
   color: #333;
 }
+.btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

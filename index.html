@@ -34,7 +34,7 @@
       <div class="buttons">
         <button data-tooltip="Exibe detalhes do arquivo ou registro" onclick="showDetails()">Detalhes</button>
         <button data-tooltip="Mostrar todos os registros" onclick="filterByType('all')">Todos</button>
-        <button data-tooltip="Registros do tipo 2 (Identificação da empresa no REP)" onclick="filterByType('2')">Tipo 2</button>
+        <button data-tooltip="Registros do tipo 2 (Identificação da empresa no REP)" onclick="filterByType('2')" disabled class="btn-disabled">Tipo 2</button>
         <button data-tooltip="Registros do tipo 3 (Marcação de ponto para REP-C e REP-A)" onclick="filterByType('3')">Tipo 3</button>
         <button data-tooltip="Registros do tipo 4 (Ajuste do relógio)" onclick="filterByType('4')">Tipo 4</button>
         <button data-tooltip="Registros do tipo 5 (Inclusão, alteração ou exclusão de empregado no REP)" onclick="filterByType('5')">Tipo 5</button>
@@ -111,6 +111,12 @@
 
             registrosData = await response.json();
             displayResult(registrosData.registros);
+
+            // Habilitar os botões após o carregamento do arquivo
+            document.querySelectorAll('.buttons button').forEach((button) => {
+              button.disabled = false;
+              button.classList.remove('btn-disabled');
+            });
           } catch (error) {
             console.error('Erro:', error);
           } finally {
@@ -134,11 +140,15 @@
       }
 
       function filterByType(tipo) {
-        showLoading(); // Mostra o overlay de carregamento
-        dom.searchArea.style.display = 'none';
+        if (!registrosData || !registrosData.registros) {
+          alert('Por favor, carregue um arquivo antes de usar os filtros.');
+          return;
+        }
+
+        dom.searchArea.style.display = 'none'; // Oculta a área de pesquisa
+        dom.searchInput.value = ''; // Limpa o campo de pesquisa
         const filteredData = tipo === 'all' ? registrosData.registros : { [tipo]: registrosData.registros[tipo] || [] };
         displayResult(filteredData);
-        hideLoading(); // Oculta o overlay de carregamento
       }
 
       function filterInvalidLines() {
@@ -286,6 +296,10 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
         dom.fileName.textContent = 'Nenhum arquivo selecionado';
         dom.resultado.textContent = '';
         registrosData = {};
+
+        // Oculta a área de pesquisa e limpa o campo de pesquisa
+        dom.searchArea.style.display = 'none';
+        dom.searchInput.value = '';
       }
 
       // Event listeners
