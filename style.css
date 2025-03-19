@@ -141,22 +141,7 @@ button:hover::after {
 }
 
 .btn-limpar:hover {
-  background-color: #b92c2c; /* Cinza mais escuro no hover */
-}
-
-/* Estilo para os outros botões (opcional) */
-.buttons button {
-  background-color: #28a745; /* Verde */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.buttons button:hover {
-  background-color: #218838; /* Verde mais escuro no hover */
+  background-color: #d20000; /* Cinza mais escuro no hover */
 }
 
 h2 {
