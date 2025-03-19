@@ -52,3 +52,7 @@ O projeto consiste em uma aplicação web que permite o upload de um arquivo AFD
    ```bash
    git clone https://github.com/seu-usuario/analisador-afd-671.git
    ```
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
