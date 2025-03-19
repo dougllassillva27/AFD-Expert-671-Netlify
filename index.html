@@ -32,16 +32,16 @@
       </form>
 
       <div class="buttons">
-        <button data-tooltip="Exibe detalhes do arquivo ou registro" onclick="showDetails()" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Detalhes</button>
-        <button data-tooltip="Mostrar todos os registros" onclick="filterByType('all')" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Todos</button>
-        <button data-tooltip="Registros do tipo 2 (Identificação da empresa no REP)" onclick="filterByType('2')" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Tipo 2</button>
-        <button data-tooltip="Registros do tipo 3 (Marcação de ponto para REP-C e REP-A)" onclick="filterByType('3')" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Tipo 3</button>
-        <button data-tooltip="Registros do tipo 4 (Ajuste do relógio)" onclick="filterByType('4')" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Tipo 4</button>
-        <button data-tooltip="Registros do tipo 5 (Inclusão, alteração ou exclusão de empregado no REP)" onclick="filterByType('5')" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Tipo 5</button>
-        <button data-tooltip="Registros do tipo 6 (Eventos sensíveis do REP)" onclick="filterByType('6')" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Tipo 6</button>
-        <button data-tooltip="Linhas que não atendem a nenhum tipo" onclick="filterInvalidLines()" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Linhas inválidas</button>
-        <button data-tooltip="Mostrar interpretação detalhada das linhas" onclick="showInterpretedLines()" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Linhas interpretadas</button>
-        <button data-tooltip="Pesquisar dentro do arquivo carregado" onclick="toggleSearch()" disabled class="btn-disabled" title="Carregue o arquivo primeiramente">Pesquisar</button>
+        <button data-tooltip="Exibe detalhes do arquivo ou registro" onclick="showDetails()" disabled class="btn-disabled">Detalhes</button>
+        <button data-tooltip="Mostrar todos os registros" onclick="filterByType('all')" disabled class="btn-disabled">Todos</button>
+        <button data-tooltip="Registros do tipo 2 (Identificação da empresa no REP)" onclick="filterByType('2')" disabled class="btn-disabled">Tipo 2</button>
+        <button data-tooltip="Registros do tipo 3 (Marcação de ponto para REP-C e REP-A)" onclick="filterByType('3')" disabled class="btn-disabled">Tipo 3</button>
+        <button data-tooltip="Registros do tipo 4 (Ajuste do relógio)" onclick="filterByType('4')" disabled class="btn-disabled">Tipo 4</button>
+        <button data-tooltip="Registros do tipo 5 (Inclusão, alteração ou exclusão de empregado no REP)" onclick="filterByType('5')" disabled class="btn-disabled">Tipo 5</button>
+        <button data-tooltip="Registros do tipo 6 (Eventos sensíveis do REP)" onclick="filterByType('6')" disabled class="btn-disabled">Tipo 6</button>
+        <button data-tooltip="Linhas que não atendem a nenhum tipo" onclick="filterInvalidLines()" disabled class="btn-disabled">Linhas inválidas</button>
+        <button data-tooltip="Mostrar interpretação detalhada das linhas" onclick="showInterpretedLines()" disabled class="btn-disabled">Linhas interpretadas</button>
+        <button data-tooltip="Pesquisar dentro do arquivo carregado" onclick="toggleSearch()" disabled class="btn-disabled">Pesquisar</button>
       </div>
 
       <h2>Resultado</h2>
@@ -88,13 +88,13 @@
 
       document.getElementById('uploadForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        showLoading(); // Mostra o overlay de carregamento
+        showLoading();
 
         const file = dom.fileInput.files[0];
         const reader = new FileReader();
 
         reader.onload = async (event) => {
-          const fileData = event.target.result.split(',')[1]; // Remove o prefixo base64
+          const fileData = event.target.result.split(',')[1];
 
           try {
             const response = await fetch('/.netlify/functions/upload', {
@@ -112,15 +112,16 @@
             registrosData = await response.json();
             displayResult(registrosData.registros);
 
-            // Habilitar os botões após o carregamento do arquivo
+            // Habilitar os botões e remover o tooltip
             document.querySelectorAll('.buttons button').forEach((button) => {
               button.disabled = false;
               button.classList.remove('btn-disabled');
+              button.removeAttribute('title'); // Remove o tooltip
             });
           } catch (error) {
             console.error('Erro:', error);
           } finally {
-            hideLoading(); // Oculta o overlay de carregamento
+            hideLoading();
           }
         };
 
@@ -301,10 +302,11 @@ Razão social: ${registrosData.ultimaAlteracaoEmpresa.razaoSocial}
         dom.searchArea.style.display = 'none';
         dom.searchInput.value = '';
 
-        // Desabilitar os botões novamente
+        // Desabilitar os botões e adicionar o tooltip
         document.querySelectorAll('.buttons button').forEach((button) => {
           button.disabled = true;
           button.classList.add('btn-disabled');
+          button.setAttribute('title', 'Carregue o arquivo primeiramente'); // Adiciona o tooltip
         });
       }
 
